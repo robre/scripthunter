@@ -13,6 +13,7 @@ To install scripthunter, clone this repository. Scripthunter relies on a couple 
 
 Furthermore, scripthunter uses Telegram to send you a notification once a scan is finished. To enable this feature, you need to create a Telegram Bot and paste your Bot API key and chatid in the scripthunter script.
 You can follow [this](https://blog.r0b.re/automation/bash/2020/06/30/setup-telegram-notifications-for-your-shell.html) guide to get these values.
+
 ![telegram](telegram.png)
 
 ### Features
