@@ -1,0 +1,6 @@
+js
+assets
+static
+assets/js
+static/js
+.
