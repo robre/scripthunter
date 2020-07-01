@@ -125,6 +125,7 @@ if [ "$silent" = "false" ]; then
 fi
 cat $TMPDIR/results/scripts-$domain.txt | httpx -status-code -silent -no-color | grep -E '\[200\]$' | cut -d " " -f1 | tee -a $TMPDIR/results/scripts-200-$domain.txt
 responsivecount="$(wc -l $TMPDIR/results/scripts-200-$domain.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
+cp $TMPDIR/results/scripts-200-$domain.txt ./result-$domain.txt
 
 tnotify "Scripthunter on $target done. $linecount ($responsivecount responsive) script files found"
 if [ "$silent" = "false" ]; then
