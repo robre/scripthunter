@@ -1,6 +1,6 @@
 ## scripthunter
 
-Scripthunter is a tool that finds javascript files for a given website. To scan goole, simply run `./scripthunter.sh https://google.com`. Note that it may take a while, which is why scripthunter also implements a notification mechanism to inform you when a scan is finished via Telegram API. [Blogpost](https://blog.r0b.re/hacking/pentesting/bugbounty/recon/web/js/2020/06/30/scripthunter-automated-js-discovery.html)
+Scripthunter is a tool that finds javascript files for a given website. To scan Google, simply run `./scripthunter.sh https://google.com`. Note that it may take a while, which is why scripthunter also implements a notification mechanism to inform you when a scan is finished via Telegram API. [Blogpost](https://blog.r0b.re/hacking/pentesting/bugbounty/recon/web/js/2020/06/30/scripthunter-automated-js-discovery.html)
 ![logo](logo.png)
 
 ### Setup
