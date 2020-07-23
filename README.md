@@ -7,10 +7,25 @@ Scripthunter is a tool that finds javascript files for a given website. To scan 
 
 To install scripthunter, clone this repository. Scripthunter relies on a couple of tools to be installed so make sure you have them:
 - gau
+```
+GO111MODULE=on go get -u -v github.com/lc/gau
+```
 - ffuf
+```
+go get github.com/ffuf/ffuf
+```
 - hakrawler
+```
+ go get github.com/hakluke/hakrawler
+```
 - httpx
-
+```
+GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
+```
+- unfurl 
+```
+go get -u github.com/tomnomnom/unfurl
+```
 Furthermore, scripthunter uses Telegram to send you a notification once a scan is finished. To enable this feature, you need to create a Telegram Bot and paste your Bot API key and chatid in the scripthunter script.
 You can follow [this](https://blog.r0b.re/automation/bash/2020/06/30/setup-telegram-notifications-for-your-shell.html) guide to get these values.
 
