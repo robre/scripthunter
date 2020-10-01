@@ -3,4 +3,7 @@ assets
 static
 assets/js
 static/js
+_next
+_next/static
+_next/static/chunks
 .
