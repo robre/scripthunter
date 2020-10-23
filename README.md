@@ -11,6 +11,7 @@ To install scripthunter, clone this repository. Scripthunter relies on a couple 
 - [ hakrawler ](https://github.com/hakluke/hakrawler)
 - [ httpx ](https://github.com/projectdiscovery/httpx)
 - [ unfurl ](https://github.com/tomnomnom/unfurl)
+- [ slackcat ] (https://github.com/dwisiswant0/slackcat)
 
 please make sure that as most of these tools are written in Go, that you have Go installed and configured properly. 
 Make sure that when you type any of the above commands in the terminal, they are recognized and work. 
@@ -26,7 +27,7 @@ You can follow [this](https://blog.r0b.re/automation/bash/2020/06/30/setup-teleg
 - Parse directories containing js files from found public files
 - Scan js directories for hidden js files using ffuf and a custom wordlist
 - check all found files for connectivity
-- notify user once scans are finished
+- notify user once scans are finished via Telegram or Slack
 - aggregate all seen js filenames into one global wordlist
 
 ### Example
