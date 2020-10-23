@@ -45,6 +45,9 @@ tnotify(){
     token="CHANGEME"
     chatid="CHANGEME"
     curl -s -X POST https://api.telegram.org/bot$token/sendMessage -d chat_id=$chatid -d text="$message" >/dev/null
+    echo "$message" | slackcat
+    #or
+    #echo "$message" | slackcat -u https://hooks.slack.com/services/xxx/xxx/xxx 
 }
 if [ $# -eq 0 ] || [ "$1" = "-h" ]
   then
