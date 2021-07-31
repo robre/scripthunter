@@ -69,12 +69,12 @@ if [ "$silent" = "false" ]; then
     banner
 fi
 
-target=`echo "$1" | unfurl format "%s://%d%:%P"`
-domain=`echo "$1"| unfurl domain`
+target=`echo "$1" | ~/go/bin/./unfurl format "%s://%d%:%P"`
+domain=`echo "$1"| ~/go/bin/./unfurl domain`
 if [ "$silent" = "false" ]; then
     echo "[*] Running GAU"
 fi
-echo "$target" | gau | unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u > $TMPDIR/gaujs.txt
+echo "$target" | ~/go/bin/./gau | ~/go/bin/./unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u > $TMPDIR/gaujs.txt
 gaucount="$(wc -l $TMPDIR/gaujs.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
     echo "[+] GAU found $gaucount scripts!"
@@ -83,15 +83,15 @@ fi
 if [ "$silent" = "false" ]; then
     echo "[*] Running hakrawler"
 fi
-hakrawler -js -url $target -plain -depth 2 -scope strict -insecure > $TMPDIR/hakrawl1.txt
-cat $TMPDIR/hakrawl1.txt| unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u > $TMPDIR/hakrawler.txt
+ echo "$target" |~/go/bin/./httpx |~/go/bin/./hakrawler -subs > $TMPDIR/hakrawl1.txt
+cat $TMPDIR/hakrawl1.txt| ~/go/bin/./unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u > $TMPDIR/hakrawler.txt
 hakcount="$(wc -l $TMPDIR/hakrawler.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
     echo "[+] HAKRAWLER found $hakcount scripts!"
 fi
 
 cat $TMPDIR/gaujs.txt $TMPDIR/hakrawler.txt | sort -u > $TMPDIR/gauhak.txt
-cat $TMPDIR/gauhak.txt | unfurl format "%s://%d%:%P%p" | grep "\.js$" | rev | cut -d "/" -f2- | rev | sort -u > $TMPDIR/jsdirs.txt
+cat $TMPDIR/gauhak.txt | ~/go/bin/./unfurl format "%s://%d%:%P%p" | grep "\.js$" | rev | cut -d "/" -f2- | rev | sort -u > $TMPDIR/jsdirs.txt
 touch $TMPDIR/ffuf.txt
 jsdircount="$(wc -l $TMPDIR/jsdirs.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
@@ -106,7 +106,7 @@ cat $TMPDIR/jsdirs.txt | sort -u | while read jsdir; do
         echo "[*] Running FFUF on $jsdir/"
     fi
     # for more thorough, add .min.js,.common.js,.built.js,.chunk.js,.bundled.js,...
-    ffuf -w $wordlist -u $jsdir/FUZZ -e .js,.min.js -mc 200,304 -o $TMPDIR/ffuf.json -s -t 100 > /dev/null
+    ~/go/bin/./ffuf -w $wordlist -u $jsdir/FUZZ -e .js,.min.js -mc 200,304 -o $TMPDIR/ffuf.json -s -t 100 > /dev/null
     cat $TMPDIR/ffuf.json | jq -r ".results[].url" | grep "\.js" | unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u >$TMPDIR/ffuf_tmp.txt
     cat $TMPDIR/ffuf_tmp.txt >> $TMPDIR/ffuf.txt
     ffuftmpcount="$(wc -l $TMPDIR/ffuf_tmp.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
@@ -123,7 +123,7 @@ linecount="$(wc -l $TMPDIR/results/scripts-$domain.txt | sed -e 's/^[[:space:]]*
 if [ "$silent" = "false" ]; then
     echo "[+] Checking Script Responsiveness of $linecount scripts.."
 fi
-cat $TMPDIR/results/scripts-$domain.txt | httpx -status-code -silent -no-color | grep -E '\[200\]$' | cut -d " " -f1 | tee -a $TMPDIR/results/scripts-200-$domain.txt
+cat $TMPDIR/results/scripts-$domain.txt | ~/go/bin/./httpx -status-code -silent -no-color | grep -E '\[200\]$' | cut -d " " -f1 | tee -a $TMPDIR/results/scripts-200-$domain.txt
 responsivecount="$(wc -l $TMPDIR/results/scripts-200-$domain.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 
 tnotify "Scripthunter on $target done. $linecount ($responsivecount responsive) script files found"
