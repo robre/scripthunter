@@ -83,7 +83,7 @@ fi
 if [ "$silent" = "false" ]; then
     echo "[*] Running hakrawler"
 fi
-hakrawler -js -url $target -plain -depth 2 -scope strict -insecure > $TMPDIR/hakrawl1.txt
+echo "$target" | hakrawler -insecure > $TMPDIR/hakrawl1.txt
 cat $TMPDIR/hakrawl1.txt| unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u > $TMPDIR/hakrawler.txt
 hakcount="$(wc -l $TMPDIR/hakrawler.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
