@@ -81,17 +81,16 @@ if [ "$silent" = "false" ]; then
 fi
 
 if [ "$silent" = "false" ]; then
-    echo "[*] Running hakrawler"
+    echo "[*] Running gospider"
 fi
-hakrawler -js -url $target -plain -depth 2 -scope strict -insecure > $TMPDIR/hakrawl1.txt
-cat $TMPDIR/hakrawl1.txt| unfurl format "%s://%d%:%P%p" | grep -iE "\.js$" | sort -u > $TMPDIR/hakrawler.txt
-hakcount="$(wc -l $TMPDIR/hakrawler.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
+gospider -s "$target" -d 2 | grep -o 'http[s]\?://[^ ]\+' | grep -iE "\.js$" | sort -u > $TMPDIR/gospider.txt
+spidercount="$(wc -l $TMPDIR/gospider.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
-    echo "[+] HAKRAWLER found $hakcount scripts!"
+    echo "[+] GOSPIDER found $spidercount scripts!"
 fi
 
-cat $TMPDIR/gaujs.txt $TMPDIR/hakrawler.txt | sort -u > $TMPDIR/gauhak.txt
-cat $TMPDIR/gauhak.txt | unfurl format "%s://%d%:%P%p" | grep "\.js$" | rev | cut -d "/" -f2- | rev | sort -u > $TMPDIR/jsdirs.txt
+cat $TMPDIR/gaujs.txt $TMPDIR/gospider.txt | sort -u > $TMPDIR/gauspi.txt
+cat $TMPDIR/gauspi.txt | unfurl format "%s://%d%:%P%p" | grep "\.js$" | rev | cut -d "/" -f2- | rev | sort -u > $TMPDIR/jsdirs.txt
 touch $TMPDIR/ffuf.txt
 jsdircount="$(wc -l $TMPDIR/jsdirs.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
@@ -118,7 +117,7 @@ done
 #python3 /opt/LinkFinder/linkfinder.py -d -i $target -o cli >> linkfinder.txt
 
 
-cat $TMPDIR/gauhak.txt $TMPDIR/ffuf.txt | grep "\.js" | grep -v "Running against:" |sort -u > $TMPDIR/results/scripts-$domain.txt
+cat $TMPDIR/gauspi.txt $TMPDIR/ffuf.txt | grep "\.js" | grep -v "Running against:" |sort -u > $TMPDIR/results/scripts-$domain.txt
 linecount="$(wc -l $TMPDIR/results/scripts-$domain.txt | sed -e 's/^[[:space:]]*//' | cut -d " " -f 1)"
 if [ "$silent" = "false" ]; then
     echo "[+] Checking Script Responsiveness of $linecount scripts.."
