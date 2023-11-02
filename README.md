@@ -8,7 +8,7 @@ Scripthunter is a tool that finds javascript files for a given website. To scan 
 To install scripthunter, clone this repository. Scripthunter relies on a couple of tools to be installed so make sure you have them:
 - [ gau ](https://github.com/lc/gau)
 - [ ffuf ](https://github.com/ffuf/ffuf)
-- [ hakrawler ](https://github.com/hakluke/hakrawler)
+- [ gospider ](https://github.com/jaeles-project/gospider)
 - [ httpx ](https://github.com/projectdiscovery/httpx)
 - [ unfurl ](https://github.com/tomnomnom/unfurl)
 
